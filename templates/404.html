@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+  <div class="alert alert-danger">
+    <h2>404 - Página não encontrada</h2>
+    <p>O recurso que você tentou acessar não existe.</p>
+    <a href="{{ url_for('home') }}" class="btn btn-primary">Voltar para Home</a>
+  </div>
+{% endblock %}

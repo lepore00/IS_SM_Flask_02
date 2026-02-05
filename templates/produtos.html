@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<div class="d-flex gap-2 mb-3">
+    <a href="{{ url_for('criar_produto') }}" class="btn btn-success">+ Cadastrar Produto</a>
+</div>
+
+<form method="GET" class="row g-2 mb-4">
+    <div class="col-auto">
+        <input type="text" name="search" class="form-control" placeholder="Buscar por nome (ex: notebook)"
+            value="{{ search or '' }}">
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary" type="submit">Buscar</button>
+        <a class="btn btn-secondary" href="{{ url_for('listar_produtos') }}">Limpar</a>
+    </div>
+</form>
+
+{% if search %}
+<div class="alert alert-info">
+    Resultado da busca por: <strong>{{ search }}</strong>
+    {% if resultSearch|length == 0 %}
+    <div>Nenhum produto encontrado.</div>
+    {% endif %}
+</div>
+
+{% if resultSearch|length > 0 %}
+<ul class="list-group mb-4">
+    {% for p in resultSearch %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <strong>#{{ p.id }}</strong> - {{ p.nome }} | R$ {{ "%.2f"|format(p.preco) }}
+        </div>
+        <div class="d-flex gap-2">
+            <a class="btn btn-sm btn-warning" href="{{ url_for('editar_produto', id=p.id) }}">Editar</a>
+
+            <form method="POST" action="{{ url_for('deletar_produto', id=p.id) }}"
+                onsubmit="return confirm('Tem certeza que deseja excluir o produto {{ p.nome }}?');">
+                <button class="btn btn-sm btn-danger" type="submit">Excluir</button>
+            </form>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endif %}
+
+<h3>Todos os produtos</h3>
+<ul class="list-group">
+    {% for p in produtos %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <strong>#{{ p.id }}</strong> - {{ p.nome }} | R$ {{ "%.2f"|format(p.preco) }}
+        </div>
+
+        <div class="d-flex gap-2">
+            <a class="btn btn-sm btn-warning" href="{{ url_for('editar_produto', id=p.id) }}">Editar</a>
+
+            <form method="POST" action="{{ url_for('deletar_produto', id=p.id) }}"
+                onsubmit="return confirm('Tem certeza que deseja excluir o produto {{ p.nome }}?');">
+                <button class="btn btn-sm btn-danger" type="submit">Excluir</button>
+            </form>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

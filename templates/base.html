@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ title }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="container py-4">
+  <h1 class="mb-3">{{ header }}</h1>
+
+  <nav class="mb-4">
+    <a class="btn btn-outline-primary me-2" href="{{ url_for('home') }}">Home</a>
+    <a class="btn btn-outline-primary" href="{{ url_for('listar_produtos') }}">Produtos</a>
+  </nav>
+
+  {% block conteudo %}{% endblock %}
+
+  <hr class="mt-5">
+  <footer>
+    <p class="text-muted mb-0">Todos os Direitos Reservados.</p>
+  </footer>
+</body>
+</html>
